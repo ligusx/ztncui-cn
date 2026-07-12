@@ -7,14 +7,14 @@ extends network_layout
 
 block net_content
   - if (member !== undefined)
-    h4 for member
+    h4 成员
       a(href='../' + member.address)  #{member.address}
-  h4 Editing of
+  h4
     b  #{title}
-    |  has not been implemented.
+    |  的编辑功能尚未实现。
 
   h4
-    | Note that you may be able to edit some properties on the 
+    | 请注意，您可以在 
     strong
-      a(href='/controller/network/' + network.nwid + '#members') Members
-    |  page.
+      a(href='/controller/network/' + network.nwid + '#members') 成员
+    |  页面上编辑某些属性。
