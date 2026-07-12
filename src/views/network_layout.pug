@@ -13,14 +13,14 @@ block content
       .col-sm-10
         block network_title
           h2
-            | Network 
+            | 网络 
             a(href='/controller/network/' + network.nwid) #{network.name}
-            |  (#{network.nwid}):
+            |  (#{network.nwid})：
         block title
           if title
             h3= title
 
       .col-sm-2
         h2.right
-          a.btn.btn-default(href=navigate.whence role='button') Back
+          a.btn.btn-default(href=navigate.whence role='button') 返回
     block net_content
