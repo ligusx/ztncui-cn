@@ -9,6 +9,8 @@ const auth = require('../controllers/auth');
 const authenticate = auth.authenticate;
 const restrict = auth.restrict;
 const router = express.Router();
+const fs = require('fs');  // 用于文件操作
+const path = require('path');  // 用于路径处理
 
 /** Redirect logged user to controler page */
 function guest_only(req, res, next) {
@@ -60,4 +62,68 @@ router.post('/login', async function(req, res) {
     }
   });
 });
+
+// ========== 文件下载路由（需要登录） ==========
+
+/**
+ * 下载 planet 文件
+ * 文件路径：/app/dist/planet
+ * 需要用户已登录
+ */
+router.get('/download/planet', restrict, function(req, res) {
+  const filePath = '/app/dist/planet';
+  
+  // 检查文件是否存在
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).send('planet 文件不存在');
+    }
+    
+    res.download(filePath, 'planet', (err) => {
+      if (err) {
+        console.error('下载 planet 文件失败:', err);
+        res.status(500).send('文件下载失败');
+      }
+    });
+  });
+});
+
+/**
+ * 下载 .moon 文件
+ * 文件路径：/app/dist/*.moon
+ * 自动查找目录下的第一个 .moon 文件
+ * 需要用户已登录
+ */
+router.get('/download/moon', restrict, function(req, res) {
+  const distPath = '/app/dist';
+  
+  // 检查目录是否存在
+  fs.access(distPath, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).send('目录不存在');
+    }
+    
+    fs.readdir(distPath, (err, files) => {
+      if (err) {
+        console.error('读取目录失败:', err);
+        return res.status(500).send('读取目录失败');
+      }
+      
+      // 查找第一个 .moon 文件
+      const moonFile = files.find(f => f.endsWith('.moon'));
+      if (!moonFile) {
+        return res.status(404).send('未找到 .moon 文件');
+      }
+      
+      const filePath = path.join(distPath, moonFile);
+      res.download(filePath, moonFile, (err) => {
+        if (err) {
+          console.error('下载 .moon 文件失败:', err);
+          res.status(500).send('文件下载失败');
+        }
+      });
+    });
+  });
+});
+
 module.exports = router;
