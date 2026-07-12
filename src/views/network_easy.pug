@@ -46,8 +46,8 @@ block net_content
         poolStart.value = int32toIPv4String(net32 + 1);  
         poolEnd.value = int32toIPv4String(bcast32 - 1);
       } else {
-        poolStart.value = 'Invalid network CIDR';
-        poolEnd.value = 'Invalid network CIDR';
+        poolStart.value = '无效的网络 CIDR';
+        poolEnd.value = '无效的网络 CIDR';
       }
     }
 
@@ -57,30 +57,30 @@ block net_content
 
   form(method='POST' action='')
     .form-group
-      button.btn.btn-link.float-right(type='button' data-toggle='collapse' data-target='#help') Help
+      button.btn.btn-link.float-right(type='button' data-toggle='collapse' data-target='#help') 帮助
       .collapse(id='help')
-        p Please note that this utility only supports IPv4 at this stage.
-        p Use the following button to automatically generate a random network address, otherwise fill in the network address CIDR manually and the IP assignment pool will be automatically calculated for you.  You can manually alter these calculated values.
+        p 请注意，此工具目前仅支持 IPv4。
+        p 使用以下按钮可自动生成随机网络地址，否则请手动填写网络地址 CIDR，系统将自动为您计算 IP 分配池。您可以手动修改这些计算出的值。
 
     .form-group
-      button.btn.btn-primary(id='genIPv4' type='button' onclick='randomIPv4()') Generate network address
+      button.btn.btn-primary(id='genIPv4' type='button' onclick='randomIPv4()') 生成网络地址
 
     .form-group
-      label(for='networkCIDR') Network address in CIDR notation
-      input#networkCIDR.form-control(type='text' name='networkCIDR' onchange='CIDRtoPool(this.value)' placeholder='e.g. 10.11.12.0/24' value=(undefined===network.routes[0]? '' : network.routes[0].target))
+      label(for='networkCIDR') CIDR 格式的网络地址
+      input#networkCIDR.form-control(type='text' name='networkCIDR' onchange='CIDRtoPool(this.value)' placeholder='例如：10.11.12.0/24' value=(undefined===network.routes[0]? '' : network.routes[0].target))
 
     .form-group
-      label(for='poolStart') Start of IP assignment pool
-      input#poolStart.form-control(type='text' name='poolStart' placeholder='e.g. 10.11.12.1' value=(undefined===network.ipAssignmentPools[0]? '' : network.ipAssignmentPools[0].ipRangeStart))
+      label(for='poolStart') IP 分配池起始地址
+      input#poolStart.form-control(type='text' name='poolStart' placeholder='例如：10.11.12.1' value=(undefined===network.ipAssignmentPools[0]? '' : network.ipAssignmentPools[0].ipRangeStart))
 
     .form-group
-      label(for='poolEnd') End of IP assignment pool
-      input#poolEnd.form-control(type='text' name='poolEnd' placeholder='e.g. 10.11.12.254' value=(undefined===network.ipAssignmentPools[0]? '' : network.ipAssignmentPools[0].ipRangeEnd))
+      label(for='poolEnd') IP 分配池结束地址
+      input#poolEnd.form-control(type='text' name='poolEnd' placeholder='例如：10.11.12.254' value=(undefined===network.ipAssignmentPools[0]? '' : network.ipAssignmentPools[0].ipRangeEnd))
 
     .form-group(style='padding-top: 10px')
-      button.btn.btn-primary(type='submit') Submit
+      button.btn.btn-primary(type='submit') 提交
       = ' '
-      a.btn.btn-default(href=('/controller/network/' + network.nwid) name='cancel' role='button') Cancel
+      a.btn.btn-default(href=('/controller/network/' + network.nwid) name='cancel' role='button') 取消
 
     if errors
       ul
