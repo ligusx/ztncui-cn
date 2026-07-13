@@ -35,13 +35,13 @@ router.get('/logout', function(req, res) {
 router.get('/login', guest_only, function(req, res) {
   let message = null;
   if (req.session.error) {
-    if (req.session.error !== 'Access denied!') {
+    if (req.session.error !== '拒绝访问！') {
       message = req.session.error;
     }
   } else {
     message = req.session.success;
   }
-  res.render('login', { title: 'Login', message: message });
+  res.render('login', { title: '登录', message: message });
 });
 
 router.post('/login', async function(req, res) {
