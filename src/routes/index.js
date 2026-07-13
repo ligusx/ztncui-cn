@@ -39,7 +39,7 @@ router.get('/login', guest_only, function(req, res) {
   } else {
     message = req.session.success;
   }
-  res.render('login', { title: 'Login', message: message });
+  res.render('login', { title: '登录', message: message });
 });
 
 router.post('/login', async function(req, res) {
@@ -55,7 +55,7 @@ router.post('/login', async function(req, res) {
         }
       });
     } else {
-      req.session.error = 'Authentication failed, please check your username and password.'
+      req.session.error = '身份验证失败，请检查您的用户名和密码。'
       res.redirect('/login');
     }
   });
