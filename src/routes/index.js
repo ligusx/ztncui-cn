@@ -57,7 +57,7 @@ router.post('/login', async function(req, res) {
         }
       });
     } else {
-      req.session.error = 'Authentication failed, please check your username and password.'
+      req.session.error = '身份验证失败，请检查您的用户名和密码。'
       res.redirect('/login');
     }
   });
