@@ -151,11 +151,14 @@ block net_content
   a.btn.btn-default(href='' name='refresh' role='button') 刷新
 
   h3#detail 网络详情
-  each value, key in network
-    .row(style='margin: 5px 0;')
-      .col-sm-2
-        a(href= network.nwid + '/' + key) #{key}:
-      .col-sm-10
-        +json_value(value)
+  details
+    summary(style='cursor: pointer; color: #007bff;')
+      | 点击展开网络详情
+    each value, key in network
+      .row(style='margin: 5px 0;')
+        .col-sm-2
+          a(href= network.nwid + '/' + key) #{key}:
+        .col-sm-10
+          +json_value(value)
 
   a.btn.btn-default(href='/controller/networks' name='networks' role='button' style='margin-top: 10px;') 网络列表
